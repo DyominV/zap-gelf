@@ -25,7 +25,7 @@ import (
 	
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"github.com/snovichkov/zap-gelf"
+	"github.com/DyominV/zap-gelf"
 )
 
 func main() {
@@ -42,6 +42,7 @@ func main() {
     if core, err = gelf.NewCore(
         gelf.Addr("127.0.0.1:12001"),
         gelf.Host(host),
+        gelf.Facility("Google Go"),
     ); err != nil {
         panic(err)
     }

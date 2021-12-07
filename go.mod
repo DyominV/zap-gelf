@@ -1,6 +1,6 @@
-module github.com/snovichkov/zap-gelf
+module github.com/DyominV/zap-gelf
 
-go 1.12
+go 1.16
 
 require (
 	github.com/pkg/errors v0.8.1 // indirect
