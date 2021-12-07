@@ -50,6 +50,7 @@ type (
 		addr             string
 		host             string
 		version          string
+		facility         string
 		enabler          zap.AtomicLevel
 		encoder          zapcore.EncoderConfig
 		chunkSize        int
@@ -116,6 +117,7 @@ func NewCore(options ...Option) (_ zapcore.Core, err error) {
 			EncodeDuration: zapcore.SecondsDurationEncoder,
 		},
 		version:          "1.1",
+		facility:         "Google Go",
 		enabler:          zap.NewAtomicLevel(),
 		chunkSize:        DefaultChunkSize,
 		writeSyncers:     make([]zapcore.WriteSyncer, 0, 8),
@@ -150,6 +152,7 @@ func NewCore(options ...Option) (_ zapcore.Core, err error) {
 		core: core.With([]zapcore.Field{
 			zap.String("host", conf.host),
 			zap.String("version", conf.version),
+			zap.String("facility", conf.facility),
 		}),
 	}, nil
 }
@@ -174,6 +177,14 @@ func Host(value string) Option {
 func Version(value string) Option {
 	return optionFunc(func(conf *optionConf) error {
 		conf.version = value
+		return nil
+	})
+}
+
+// Version set GELF facility.
+func Facility(value string) Option {
+	return optionFunc(func(conf *optionConf) error {
+		conf.facility = value
 		return nil
 	})
 }
@@ -383,7 +394,7 @@ func escapeKey(value string) string {
 	switch value {
 	case "id":
 		return "__id"
-	case "version", "host", "short_message", "full_message", "timestamp", "level":
+	case "version", "facility", "host", "short_message", "full_message", "timestamp", "level":
 		return value
 	}
 
