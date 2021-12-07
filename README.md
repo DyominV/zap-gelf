@@ -6,7 +6,7 @@ additional fields on Graylog.
 ## Installation
 
 ```bash
-go get -u github.com/snovichkov/zap-gelf
+go get -u github.com/DyominV/zap-gelf
 ```
 
 ## Features
